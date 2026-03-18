@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>itwoj Realty Ltd — Dream | Build | Invest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #B01030;
+    --red-dark: #8a0d25;
+    --red-light: #cc1538;
+    --grey: #6B6462;
+    --grey-light: #9e9896;
+    --grey-bg: #F5F2F0;
+    --black: #1A1A1A;
+    --white: #FFFFFF;
+    --cream: #FAF7F5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(176,16,48,0.1);
+    transition: box-shadow 0.3s;
+  }
+
+  nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.08); }
+
+  .nav-logo img {
+    height: 48px;
+    width: auto;
+  }
+
+  .nav-logo-fallback {
+    display: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--red);
+  }
+
+  /* Hamburger */
+  .hamburger {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1001;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--black);
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Full screen menu */
+  .nav-menu {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--black);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .nav-menu.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-menu-links {
+    list-style: none;
+    text-align: center;
+  }
+
+  .nav-menu-links li {
+    overflow: hidden;
+  }
+
+  .nav-menu-links a {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: white;
+    text-decoration: none;
+    line-height: 1.3;
+    letter-spacing: -1px;
+    transition: color 0.2s;
+    padding: 4px 0;
+  }
+
+  .nav-menu-links a:hover { color: var(--red-light); }
+
+  .nav-menu-links a em {
+    font-style: italic;
+    color: var(--red-light);
+  }
+
+  .nav-menu-bottom {
+    position: absolute;
+    bottom: 48px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 60px;
+  }
+
+  .nav-menu-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nav-menu-contact a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .nav-menu-contact a:hover { color: white; }
+
+  .nav-menu-socials {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-menu-socials a {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-menu-socials a:hover { color: var(--red-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+    padding-top: 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(176,16,48,0.88) 0%, rgba(26,26,26,0.96) 55%),
+      url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80') center/cover no-repeat;
+    z-index: 0;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    z-index: 1;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    right: -60px;
+    bottom: -80px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 380px;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    z-index: 1;
+    user-select: none;
+    letter-spacing: -10px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 60px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow-line { width: 40px; height: 2px; background: var(--red-light); }
+
+  .hero-eyebrow span {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    color: white;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-headline .red { color: var(--red-light); }
+  .hero-headline .italic { font-style: italic; }
+  .hero-headline .bold { font-weight: 700; }
+
+  .hero-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    line-height: 2;
+    max-width: 440px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: white;
+    padding: 16px 36px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: gap 0.2s;
+  }
+
+  .btn-secondary:hover { gap: 16px; }
+
+  .btn-arrow {
+    width: 32px; height: 1px;
+    background: rgba(255,255,255,0.4);
+    position: relative;
+  }
+
+  .btn-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0; top: -4px;
+    width: 8px; height: 8px;
+    border-right: 1px solid rgba(255,255,255,0.4);
+    border-top: 1px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+  }
+
+  /* Hero right stats */
+  .hero-right { animation: fadeUp 0.8s 0.4s ease both; }
+
+  .stats-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 44px 36px;
+    position: relative;
+  }
+
+  .stats-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 80px;
+    background: var(--red);
+  }
+
+  .stats-card-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-number span { font-size: 26px; color: var(--red-light); }
+
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+
+  .stats-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 28px; }
+
+  .stats-live {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .live-dot {
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(176,16,48,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(176,16,48,0); }
+  }
+
+  .stats-live-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  .stats-live-text strong { color: white; }
+
+  /* Scroll indicator */
+  .scroll-ind {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-ind span {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+    animation: scrollAnim 1.8s ease infinite;
+  }
+
+  @keyframes scrollAnim {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ─── SEARCH BAR ─── */
+  .search-section {
+    background: var(--white);
+    padding: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .search-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+    transform: translateY(-50%);
+  }
+
+  .search-inner {
+    background: white;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    padding: 32px 40px;
+    border-bottom: 4px solid var(--red);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 20px;
+    align-items: end;
+  }
+
+  .search-field {}
+
+  .search-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--grey-light);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .search-input, .search-select {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid rgba(176,16,48,0.15);
+    padding: 10px 0;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--black);
+    background: transparent;
+    outline: none;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .search-input:focus, .search-select:focus { border-bottom-color: var(--red); }
+  .search-select option { font-size: 13px; }
+
+  .search-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .search-btn:hover { background: var(--red-dark); }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 100px 0; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .eyebrow-line { width: 30px; height: 2px; background: var(--red); }
+
+  .eyebrow-text {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 68px;
+    font-weight: 300;
+    color: var(--black);
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .section-title .italic { font-style: italic; color: var(--red); }
+  .section-title .bold { font-weight: 700; }
+  .section-title.white { color: white; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--cream); position: relative; overflow: hidden; }
+
+  #about::before {
+    content: 'ITWOJ';
+    position: absolute;
+    right: -40px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 280px;
+    color: rgba(176,16,48,0.04);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-body {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 2;
+    margin-bottom: 24px;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--red);
+    border-left: 3px solid var(--red);
+    padding-left: 24px;
+    line-height: 1.6;
+    margin: 32px 0;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .tag {
+    border: 1px solid rgba(176,16,48,0.25);
+    padding: 8px 18px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .founder-card {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .founder-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; right: -10px;
+    width: 100%; height: 100%;
+    border: 2px solid var(--red);
+    z-index: -1;
+  }
+
+  .founder-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .founder-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .founder-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--red-light);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .founder-div { width: 40px; height: 2px; background: var(--red); margin-bottom: 24px; }
+
+  .founder-bio {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.9;
+  }
+
+  .founder-creds { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+
+  .cred {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cred-dot { width: 5px; height: 5px; background: var(--red); flex-shrink: 0; }
+
+  .cred span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.3px;
+  }
+
+  /* ─── WHY ─── */
+  #why { background: var(--black); position: relative; overflow: hidden; }
+
+  .why-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+
+  .why-intro {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    line-height: 2;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .reason-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 44px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+
+  .reason-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 3px;
+    background: var(--red);
+    transition: width 0.4s;
+  }
+
+  .reason-card:hover { background: rgba(176,16,48,0.07); border-color: rgba(176,16,48,0.18); }
+  .reason-card:hover::before { width: 100%; }
+
+  .reason-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .reason-icon { font-size: 26px; margin-bottom: 14px; }
+
+  .reason-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .reason-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.9;
+  }
+
+  /* ─── LISTINGS ─── */
+  #listings { background: var(--white); }
+
+  .listings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 52px;
+  }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .listing-card {
+    background: var(--cream);
+    border: 1px solid rgba(176,16,48,0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(176,16,48,0.1);
+  }
+
+  .listing-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .listing-img {
+    position: relative;
+    height: 280px;
+    background:
+      linear-gradient(135deg, rgba(176,16,48,0.7), rgba(26,26,26,0.75)),
+      url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80') center/cover no-repeat;
+  }
+
+  .listing-card.featured .listing-img { height: 100%; min-height: 420px; }
+
+  .listing-badge {
+    position: absolute;
+    top: 20px; left: 20px;
+    background: var(--red);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+  }
+
+  .listing-price-overlay {
+    position: absolute;
+    bottom: 24px; left: 24px;
+  }
+
+  .listing-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .listing-price-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .listing-info {
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .listing-eyebrow {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .listing-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--black);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .listing-card.featured .listing-title { font-size: 44px; }
+
+  .listing-loc {
+    font-size: 12px;
+    color: var(--grey);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .listing-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(176,16,48,0.1);
+    border-bottom: 1px solid rgba(176,16,48,0.1);
+    margin-bottom: 24px;
+  }
+
+  .spec-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .spec-lbl {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--grey-light);
+    text-transform: uppercase;
+  }
+
+  .listing-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .listing-feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--grey);
+  }
+
+  .feat-dot { width: 4px; height: 4px; background: var(--red); flex-shrink: 0; }
+
+  .listing-cta {
+    background: var(--red);
+    color: white;
+    padding: 14px 28px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+
+  .listing-cta:hover { background: var(--red-dark); }
+
+  /* Coming soon card */
+  .listing-card.coming-soon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    border: 2px dashed rgba(176,16,48,0.2);
+    background: transparent;
+  }
+
+  .coming-soon-inner { text-align: center; padding: 40px; }
+
+  .coming-soon-icon { font-size: 36px; margin-bottom: 16px; }
+
+  .coming-soon-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--grey-light);
+    margin-bottom: 8px;
+  }
+
+  .coming-soon-sub {
+    font-size: 11px;
+    color: var(--grey-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ─── VIDEO SECTION ─── */
+  #videos { background: var(--black); }
+
+  .video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 52px;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .video-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .video-card.main { grid-row: 1 / 3; }
+
+  .video-thumb {
+    width: 100%;
+    padding-top: 56.25%;
+    background:
+      linear-gradient(135deg, rgba(176,16,48,0.6), rgba(26,26,26,0.8)),
+      url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80') center/cover no-repeat;
+    position: relative;
+  }
+
+  .video-card.main .video-thumb { padding-top: 100%; }
+
+  .video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .video-card:hover .video-play {
+    background: var(--red);
+    border-color: var(--red);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .video-info {
+    padding: 20px;
+  }
+
+  .video-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .video-card.main .video-title { font-size: 28px; }
+
+  .video-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+  }
+
+  .video-cta-row {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .btn-outline-red {
+    border: 2px solid var(--red);
+    color: var(--red);
+    padding: 14px 36px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-outline-red:hover { background: var(--red); color: white; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--grey-bg); overflow: hidden; }
+
+  .testimonials-header { margin-bottom: 56px; }
+
+  .testimonials-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: white;
+    padding: 44px 36px;
+    position: relative;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .testimonial-card:hover {
+    border-bottom-color: var(--red);
+    transform: translateY(-4px);
+  }
+
+  .testimonial-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: rgba(176,16,48,0.12);
+    line-height: 0.8;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .testimonial-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.9;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .testimonial-divider {
+    width: 32px; height: 2px;
+    background: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .testimonial-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .testimonial-detail {
+    font-size: 10px;
+    color: var(--grey-light);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .testimonial-stars {
+    position: absolute;
+    top: 36px; right: 36px;
+    color: #f0a500;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  /* ─── CTA BAND ─── */
+  .cta-band {
+    background: var(--red);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-band::before {
+    content: 'DREAM BUILD';
+    position: absolute;
+    left: -20px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    color: rgba(255,255,255,0.05);
+    white-space: nowrap;
+    user-select: none;
+    letter-spacing: 20px;
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: white;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .cta-title em { font-style: italic; font-weight: 600; }
+
+  .cta-actions { display: flex; gap: 16px; flex-shrink: 0; }
+
+  .btn-white {
+    background: white;
+    color: var(--red);
+    padding: 16px 36px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  .btn-white:hover { transform: translateY(-2px); }
+
+  .btn-outline-white {
+    border: 2px solid rgba(255,255,255,0.5);
+    color: white;
+    padding: 16px 36px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .btn-outline-white:hover { border-color: white; transform: translateY(-2px); }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--black); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .contact-info { margin-top: 44px; display: flex; flex-direction: column; gap: 24px; }
+
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+
+  .contact-icon {
+    width: 42px; height: 42px;
+    background: rgba(176,16,48,0.15);
+    border: 1px solid rgba(176,16,48,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .contact-val {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+
+  a.contact-val:hover { color: var(--red-light); }
+
+  .social-row { margin-top: 44px; }
+
+  .social-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .social-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .social-link {
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 8px 16px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .social-link:hover { border-color: var(--red); color: var(--red-light); }
+
+  .contact-form-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 48px 40px;
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .form-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 32px;
+  }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 13px 16px;
+    color: white;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--red); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.18); }
+  .form-select { cursor: pointer; }
+  .form-select option { background: #1a1a1a; }
+  .form-textarea { resize: vertical; min-height: 90px; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s;
+    margin-top: 6px;
+  }
+
+  .form-submit:hover { background: var(--red-dark); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0f0f0f;
+    padding: 40px 0 28px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo img { height: 40px; filter: brightness(0) invert(1); opacity: 0.6; }
+
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .footer-copy {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.18);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ─── WHATSAPP POPUP ─── */
+  .wa-bubble {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    z-index: 9999;
+  }
+
+  .wa-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .wa-btn:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(37,211,102,0.5); }
+
+  .wa-popup {
+    position: absolute;
+    bottom: 72px; right: 0;
+    width: 300px;
+    background: white;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .wa-popup.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+  .wa-popup-header {
+    background: #075E54;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wa-popup-avatar {
+    width: 44px; height: 44px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .wa-popup-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .wa-popup-status {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .wa-status-dot {
+    width: 6px; height: 6px;
+    background: #25D366;
+    border-radius: 50%;
+  }
+
+  .wa-popup-body { padding: 20px; }
+
+  .wa-message {
+    background: #f0f0f0;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 8px;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .wa-start-btn {
+    display: block;
+    background: #25D366;
+    color: white;
+    text-align: center;
+    padding: 13px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .wa-start-btn:hover { background: #1ebe5c; }
+
+  .wa-notification {
+    position: absolute;
+    top: -4px; right: -4px;
+    width: 18px; height: 18px;
+    background: var(--red);
+    border-radius: 50%;
+    font-size: 11px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    nav { padding: 14px 24px; }
+    .hero-content { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
+    .hero-headline { font-size: 68px; }
+    .hero-right { display: none; }
+    .search-bar { padding: 0 24px; }
+    .search-inner { grid-template-columns: 1fr 1fr; }
+    .container { padding: 0 24px; }
+    section { padding: 70px 0; }
+    .about-grid, .contact-grid, .why-header { grid-template-columns: 1fr; gap: 40px; }
+    .reasons-grid, .testimonials-track { grid-template-columns: 1fr; }
+    .listings-grid { grid-template-columns: 1fr; }
+    .listing-card.featured { grid-template-columns: 1fr; }
+    .listing-card.featured .listing-img { min-height: 280px; }
+    .video-grid { grid-template-columns: 1fr; }
+    .video-card.main { grid-row: auto; }
+    .cta-inner { flex-direction: column; gap: 32px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-copy { text-align: center; }
+    .nav-menu-links a { font-size: 44px; }
+    .nav-menu-bottom { flex-direction: column; gap: 20px; align-items: center; bottom: 32px; }
+    .section-title { font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WHATSAPP BUBBLE -->
+<div class="wa-bubble">
+  <div class="wa-notification">1</div>
+  <div class="wa-btn" onclick="toggleWaPopup()" title="Chat with us">💬</div>
+  <div class="wa-popup" id="waPopup">
+    <div class="wa-popup-header">
+      <div class="wa-popup-avatar">🏡</div>
+      <div>
+        <div class="wa-popup-name">itwoj Realty Ltd</div>
+        <div class="wa-popup-status">
+          <div class="wa-status-dot"></div>
+          Typically replies instantly
+        </div>
+      </div>
+    </div>
+    <div class="wa-popup-body">
+      <div class="wa-message">
+        Hi! 👋 Welcome to itwoj Realty. Looking to buy land or property in Lagos? We're here to help. Send us a message!
+      </div>
+      <a href="https://wa.me/2349159898728?text=Hello%20itwoj%20Realty%2C%20I%20found%20you%20on%20your%20website%20and%20I%27d%20like%20to%20enquire%20about%20a%20property." target="_blank" class="wa-start-btn">Start Chat on WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="https://lh3.googleusercontent.com/sitesv/APaQ0SSG62cKXOWuyT-ocdeMu2KXnRPGdUeWZ0PPNb_TB7-yUABO8g_csGxfWyo-KEi5lFEB3fVQIjhjH8Xn-Yph_qw2emKIAErcGTLu7nhwJoey3gx3S0T8AB5Aw2LmghcdhAn2Ahu2Rxar9KZxuQmqB6-dTEelm-6WKsKfxKDxYKC0o1SqroExuw5l=w400" alt="itwoj Realty" onerror="this.style.display='none'; document.querySelector('.nav-logo-fallback').style.display='block'">
+    <span class="nav-logo-fallback">iTWO REALTY</span>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- FULL SCREEN MENU -->
+<div class="nav-menu" id="navMenu">
+  <ul class="nav-menu-links">
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#why" onclick="closeMenu()">Why <em>Ibeju Lekki</em></a></li>
+    <li><a href="#listings" onclick="closeMenu()">Listings</a></li>
+    <li><a href="#videos" onclick="closeMenu()">Videos</a></li>
+    <li><a href="#testimonials" onclick="closeMenu()">Testimonials</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+  <div class="nav-menu-bottom">
+    <div class="nav-menu-contact">
+      <a href="tel:09159898728">📲 09159898728</a>
+      <a href="https://wa.me/2349159898728">💬 wa.me/2349159898728</a>
+      <a href="#">📍 Eleko, Ibeju Lekki, Lagos</a>
+    </div>
+    <div class="nav-menu-socials">
+      <a href="https://www.facebook.com/share/1AYZoxCYxA/" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/itwojrealty" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/company/itwoj-realty-ltd/" target="_blank">LinkedIn</a>
+      <a href="https://vm.tiktok.com/ZS9RMykhqTFKx-Kabek/" target="_blank">TikTok</a>
+      <a href="https://youtube.com/@itwojrealty" target="_blank">YouTube</a>
+      <a href="https://x.com/itwojrealty" target="_blank">X</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-bg-text">LEKKI</div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Ibeju Lekki · Lagos · Nigeria</span>
+      </div>
+      <h1 class="hero-headline">
+        <span class="italic red">Dream.</span><br>
+        <span>Build.</span><br>
+        <span class="bold">Invest.</span>
+      </h1>
+      <p class="hero-sub">
+        We help professionals, diaspora buyers, and first-time investors own a piece of Nigeria's fastest-growing real estate corridor — before prices move further.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/2349159898728" target="_blank" class="btn-primary">Chat on WhatsApp</a>
+        <a href="#listings" class="btn-secondary">
+          View Listings
+          <span class="btn-arrow"></span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stats-card">
+        <div class="stats-card-label">Why Ibeju Lekki — At a Glance</div>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">5<span>K+</span></div>
+            <div class="stat-label">Acres of active development</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3<span>x</span></div>
+            <div class="stat-label">Land value growth in 5 years</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">#1</div>
+            <div class="stat-label">Fastest growing Lagos corridor</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">650<span>km</span></div>
+            <div class="stat-label">Dangote Refinery pipeline reach</div>
+          </div>
+        </div>
+        <div class="stats-divider"></div>
+        <div class="stats-live">
+          <div class="live-dot"></div>
+          <div class="stats-live-text">Office at <strong>Eleko, Ibeju Lekki</strong> · On the ground</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SEARCH BAR -->
+<div class="search-section">
+  <div class="search-bar">
+    <div class="search-inner">
+      <div class="search-field">
+        <label class="search-label">Location</label>
+        <select class="search-select">
+          <option>All Locations</option>
+          <option>Ibeju Lekki</option>
+          <option>Lakowe</option>
+          <option>Eleko</option>
+          <option>Lekki</option>
+          <option>Abeokuta</option>
+          <option>Greater Lagos</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label class="search-label">Property Type</label>
+        <select class="search-select">
+          <option>All Types</option>
+          <option>Land</option>
+          <option>Off-Plan Apartment</option>
+          <option>Detached House</option>
+          <option>Commercial</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label class="search-label">Budget</label>
+        <select class="search-select">
+          <option>Any Budget</option>
+          <option>Under ₦5M</option>
+          <option>₦5M — ₦20M</option>
+          <option>₦20M — ₦50M</option>
+          <option>₦50M — ₦150M</option>
+          <option>Above ₦150M</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="searchProperties()">Search →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-up">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Who We Are</span>
+        </div>
+        <h2 class="section-title">
+          Built on<br>
+          <span class="italic">Trust</span> &<br>
+          <span class="bold">Ground Knowledge</span>
+        </h2>
+        <p class="about-body">itwoj Realty Ltd is a Lagos-based real estate company specialising in off-plan property sales, land acquisition, and investment advisory across Ibeju Lekki and Greater Lagos.</p>
+        <div class="about-quote">"Every plot we recommend, we've stood on. Every project we list, we've personally verified."</div>
+        <p class="about-body">As a proud sales partner to leading real estate developers across Lagos and Ogun State, we bring credibility, connections, and on-the-ground expertise to every transaction — whether you're in Lagos, Abuja, London, or Toronto.</p>
+        <div class="about-tags">
+          <span class="tag">Off-Plan Sales</span>
+          <span class="tag">Land Acquisition</span>
+          <span class="tag">BRG Partner</span>
+          <span class="tag">Diaspora Services</span>
+          <span class="tag">Investment Advisory</span>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="founder-card">
+          <div class="founder-label">Meet the Founder</div>
+          <div class="founder-name">Ife Ilori</div>
+          <div class="founder-title">CEO & Site Inspector</div>
+          <div class="founder-div"></div>
+          <p class="founder-bio">With 2 years of hands-on property management experience and a deep conviction in the Ibeju Lekki growth story, Ife founded itwoj Realty to bridge the gap between serious investors and the right opportunities — on the ground, in real time.</p>
+          <div class="founder-creds">
+            <div class="cred"><div class="cred-dot"></div><span>BRG Network & Multiple Developer Partnerships</span></div>
+            <div class="cred"><div class="cred-dot"></div><span>Based in Eleko, Ibeju Lekki since November 2024</span></div>
+            <div class="cred"><div class="cred-dot"></div><span>2 Years Property Management Experience</span></div>
+            <div class="cred"><div class="cred-dot"></div><span>Closed deals across Lagos & Ogun State</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IBEJU LEKKI -->
+<section id="why">
+  <div class="container">
+    <div class="why-header fade-up">
+      <div>
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">The Investment Case</span>
+        </div>
+        <h2 class="section-title white">
+          Why<br>
+          <span class="italic">Ibeju Lekki</span><br>
+          <span class="bold">Right Now</span>
+        </h2>
+      </div>
+      <p class="why-intro">Ibeju Lekki is not just another Lagos suburb. It is the site of the most significant infrastructure investment in Nigeria's history. The window to buy before the market fully prices this in is closing fast.</p>
+    </div>
+    <div class="reasons-grid">
+      <div class="reason-card fade-up">
+        <div class="reason-num">01</div>
+        <div class="reason-icon">🏭</div>
+        <div class="reason-title">Dangote Refinery</div>
+        <p class="reason-desc">The largest refinery in Africa sits right here in Ibeju Lekki. It employs tens of thousands and drives enormous demand for residential and commercial property.</p>
+      </div>
+      <div class="reason-card fade-up">
+        <div class="reason-num">02</div>
+        <div class="reason-icon">🏗️</div>
+        <div class="reason-title">Lekki Free Trade Zone</div>
+        <p class="reason-desc">A thriving industrial hub attracting international investment and thousands of workers who all need housing and services nearby.</p>
+      </div>
+      <div class="reason-card fade-up">
+        <div class="reason-num">03</div>
+        <div class="reason-icon">✈️</div>
+        <div class="reason-title">New International Airport</div>
+        <p class="reason-desc">The Lekki International Airport is in development — set to transform access to this corridor and dramatically increase property demand.</p>
+      </div>
+      <div class="reason-card fade-up">
+        <div class="reason-num">04</div>
+        <div class="reason-icon">📈</div>
+        <div class="reason-title">Land Appreciation</div>
+        <p class="reason-desc">Land values here have multiplied several times over the past decade and with major infrastructure now operational, the trajectory continues upward.</p>
+      </div>
+      <div class="reason-card fade-up">
+        <div class="reason-num">05</div>
+        <div class="reason-icon">💰</div>
+        <div class="reason-title">Still Accessible</div>
+        <p class="reason-desc">Compared to Lekki Phase 1 and Victoria Island, prices remain within reach for professionals and diaspora investors — but this window is narrowing.</p>
+      </div>
+      <div class="reason-card fade-up">
+        <div class="reason-num">06</div>
+        <div class="reason-icon">🛣️</div>
+        <div class="reason-title">Infrastructure Growth</div>
+        <p class="reason-desc">Roads, bridges, utilities and commercial development are rapidly transforming Ibeju Lekki into a fully liveable, investable community.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section id="listings">
+  <div class="container">
+    <div class="listings-header fade-up">
+      <div>
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Available Properties</span>
+        </div>
+        <h2 class="section-title">
+          Our<br>
+          <span class="italic">Listings</span>
+        </h2>
+      </div>
+    </div>
+    <div class="listings-grid">
+
+      <!-- Featured Listing -->
+      <div class="listing-card featured fade-up">
+        <div class="listing-img">
+          <div class="listing-badge">Direct From Owner</div>
+          <div class="listing-price-overlay">
+            <div class="listing-price">₦150M</div>
+            <div class="listing-price-label">Asking Price</div>
+          </div>
+        </div>
+        <div class="listing-info">
+          <div class="listing-eyebrow">🏌️ Lakowe Golf Estate · Ibeju Lekki</div>
+          <h3 class="listing-title">Premium Land Plot</h3>
+          <div class="listing-loc">📍 Lakowe Golf Estate, Ibeju Lekki, Lagos</div>
+          <div class="listing-specs">
+            <div class="spec">
+              <div class="spec-val">5,460</div>
+              <div class="spec-lbl">Square Metres</div>
+            </div>
+            <div class="spec">
+              <div class="spec-val">₦150M</div>
+              <div class="spec-lbl">Asking Price</div>
+            </div>
+            <div class="spec">
+              <div class="spec-val">Direct</div>
+              <div class="spec-lbl">No Middlemen</div>
+            </div>
+            <div class="spec">
+              <div class="spec-val">Survey</div>
+              <div class="spec-lbl">Registered Survey</div>
+            </div>
+          </div>
+          <div class="listing-features">
+            <div class="listing-feat"><div class="feat-dot"></div>Ideal for developers or hospitality investors</div>
+            <div class="listing-feat"><div class="feat-dot"></div>Registered Survey documentation</div>
+            <div class="listing-feat"><div class="feat-dot"></div>Direct from owner — no agent markup</div>
+            <div class="listing-feat"><div class="feat-dot"></div>Prime Lakowe Golf Estate address</div>
+          </div>
+          <a href="https://wa.me/2349159898728?text=Hello%20itwoj%20Realty%2C%20I%27m%20interested%20in%20the%20Lakowe%20Golf%20land%20(5%2C460sqm%20%E2%82%A6150M)." target="_blank" class="listing-cta">Enquire on WhatsApp →</a>
+        </div>
+      </div>
+
+      <!-- Off-Plan Card -->
+      <div class="listing-card fade-up">
+        <div class="listing-img" style="background: linear-gradient(135deg, rgba(176,16,48,0.75), rgba(26,26,26,0.85)), url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80') center/cover no-repeat;">
+          <div class="listing-badge">Off-Plan</div>
+          <div class="listing-price-overlay">
+            <div class="listing-price">Various</div>
+            <div class="listing-price-label">Starting Prices</div>
+          </div>
+        </div>
+        <div class="listing-info">
+          <div class="listing-eyebrow">🏗️ Lagos & Ibeju Lekki</div>
+          <h3 class="listing-title">Off-Plan Projects</h3>
+          <div class="listing-loc">📍 Multiple Locations, Lagos State</div>
+          <p style="font-size:13px; color:var(--grey); line-height:1.8; margin-bottom:20px;">Access premium off-plan developments across Lagos at today's prices. We are sales partners to multiple verified developers.</p>
+          <a href="https://wa.me/2349159898728?text=Hello%20itwoj%20Realty%2C%20I%27d%20like%20to%20know%20about%20your%20off-plan%20projects." target="_blank" class="listing-cta">Get Full Catalogue →</a>
+        </div>
+      </div>
+
+      <!-- Coming Soon -->
+      <div class="listing-card coming-soon fade-up">
+        <div class="coming-soon-inner">
+          <div class="coming-soon-icon">🏡</div>
+          <div class="coming-soon-text">More listings coming soon</div>
+          <div class="coming-soon-sub">Contact us for full portfolio</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="container">
+    <div class="video-header fade-up">
+      <div>
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Property Videos</span>
+        </div>
+        <h2 class="section-title white">
+          See It<br>
+          <span class="italic">For Yourself</span>
+        </h2>
+      </div>
+    </div>
+    <div class="video-grid fade-up">
+      <div class="video-card main">
+        <div class="video-thumb">
+          <div class="video-play">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Lakowe Golf Estate — Site Tour</div>
+          <div class="video-sub">5,460 SQM · Ibeju Lekki · ₦150M</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background: linear-gradient(135deg, rgba(176,16,48,0.6), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80') center/cover no-repeat;">
+          <div class="video-play">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Why Ibeju Lekki?</div>
+          <div class="video-sub">Market Overview</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background: linear-gradient(135deg, rgba(176,16,48,0.6), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80') center/cover no-repeat;">
+          <div class="video-play">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Off-Plan Investment Guide</div>
+          <div class="video-sub">First-Time Buyers</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb" style="background: linear-gradient(135deg, rgba(176,16,48,0.6), rgba(26,26,26,0.8)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80') center/cover no-repeat;">
+          <div class="video-play">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Diaspora Investment Guide</div>
+          <div class="video-sub">Investing From Abroad</div>
+        </div>
+      </div>
+    </div>
+    <div class="video-cta-row fade-up">
+      <a href="https://youtube.com/@itwojrealty" target="_blank" class="btn-outline-red">View All Videos on YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-header fade-up">
+      <div class="section-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Client Stories</span>
+      </div>
+      <h2 class="section-title">
+        What Our<br>
+        <span class="italic">Clients</span> Say
+      </h2>
+    </div>
+    <div class="testimonials-track">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Working with itwoj Realty was smooth from start to finish. Ife personally took me to the site, explained every detail of the documentation, and made sure I was comfortable before signing. That level of care is rare.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-name">Satisfied Client</div>
+        <div class="testimonial-detail">Land Purchase · Ogun State</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">I was based in the UK and nervous about investing remotely. itwoj Realty handled everything on my behalf — site visits, documentation checks, and kept me updated every step. I now own land in Ibeju Lekki.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-name">Diaspora Investor</div>
+        <div class="testimonial-detail">Land Purchase · Ibeju Lekki</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">As a first-time buyer I had so many questions. Ife was patient, knowledgeable, and never made me feel rushed. The process was transparent and I got exactly what I was looking for within my budget.</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-name">First-Time Buyer</div>
+        <div class="testimonial-detail">Off-Plan Purchase · Lagos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <div class="cta-label">Ready to Start?</div>
+        <div class="cta-title">Let's find your<br><em>next investment.</em></div>
+      </div>
+      <div class="cta-actions">
+        <a href="https://wa.me/2349159898728" target="_blank" class="btn-white">WhatsApp Us Now</a>
+        <a href="tel:09159898728" class="btn-outline-white">Call 09159898728</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Get In Touch</span>
+        </div>
+        <h2 class="section-title white">
+          Talk to<br>
+          <span class="italic">itwoj</span><br>
+          <span class="bold">Realty</span>
+        </h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📲</div>
+            <div>
+              <div class="contact-label">Call / WhatsApp</div>
+              <a href="tel:09159898728" class="contact-val">09159898728</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-label">WhatsApp Direct</div>
+              <a href="https://wa.me/2349159898728" target="_blank" class="contact-val">wa.me/2349159898728</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Office Location</div>
+              <span class="contact-val">Eleko, Ibeju Lekki, Lagos</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-label">Working Hours</div>
+              <span class="contact-val">Mon – Sat, 8am – 6pm</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-row">
+          <div class="social-label">Follow @itwojrealty</div>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/1AYZoxCYxA/" target="_blank" class="social-link">Facebook</a>
+            <a href="https://www.instagram.com/itwojrealty" target="_blank" class="social-link">Instagram</a>
+            <a href="https://www.linkedin.com/company/itwoj-realty-ltd/" target="_blank" class="social-link">LinkedIn</a>
+            <a href="https://vm.tiktok.com/ZS9RMykhqTFKx-Kabek/" target="_blank" class="social-link">TikTok</a>
+            <a href="https://youtube.com/@itwojrealty" target="_blank" class="social-link">YouTube</a>
+            <a href="https://x.com/itwojrealty" target="_blank" class="social-link">X</a>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="contact-form-card">
+          <div class="form-title">Send an Enquiry</div>
+          <div class="form-sub">We respond within 24 hours — usually much faster.</div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="fname" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / WhatsApp</label>
+            <input type="tel" class="form-input" id="fphone" placeholder="+234 or international number">
+          </div>
+          <div class="form-group">
+            <label class="form-label">I Am Interested In</label>
+            <select class="form-select" id="finterest">
+              <option value="">Select an option</option>
+              <option>Lakowe Golf Land (5,460 sqm — ₦150M)</option>
+              <option>Off-Plan Projects in Lagos</option>
+              <option>Off-Plan Projects in Ibeju Lekki</option>
+              <option>Land Acquisition</option>
+              <option>Diaspora Investment Advisory</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" id="fmessage" placeholder="Tell us what you're looking for, your budget, timeline..."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">Send Enquiry →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="https://lh3.googleusercontent.com/sitesv/APaQ0SSG62cKXOWuyT-ocdeMu2KXnRPGdUeWZ0PPNb_TB7-yUABO8g_csGxfWyo-KEi5lFEB3fVQIjhjH8Xn-Yph_qw2emKIAErcGTLu7nhwJoey3gx3S0T8AB5Aw2LmghcdhAn2Ahu2Rxar9KZxuQmqB6-dTEelm-6WKsKfxKDxYKC0o1SqroExuw5l=w400" alt="itwoj Realty" onerror="this.style.display='none'">
+      </div>
+      <div class="footer-tagline">Dream | Build</div>
+      <div class="footer-copy">
+        © 2025 itwoj Realty Ltd. All rights reserved.<br>
+        Eleko, Ibeju Lekki, Lagos, Nigeria.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Hamburger menu
+  function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    const burger = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    burger.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    document.getElementById('navMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // WhatsApp popup
+  function toggleWaPopup() {
+    document.getElementById('waPopup').classList.toggle('open');
+    document.querySelector('.wa-notification').style.display = 'none';
+  }
+
+  document.addEventListener('click', (e) => {
+    const bubble = document.querySelector('.wa-bubble');
+    if (!bubble.contains(e.target)) {
+      document.getElementById('waPopup').classList.remove('open');
+    }
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((el, i) => {
+      if (el.isIntersecting) {
+        setTimeout(() => el.target.classList.add('visible'), (i % 3) * 120);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Search
+  function searchProperties() {
+    const location = document.querySelectorAll('.search-select')[0].value;
+    const type = document.querySelectorAll('.search-select')[1].value;
+    const budget = document.querySelectorAll('.search-select')[2].value;
+    const msg = `Hello itwoj Realty, I'm looking for a property.\nLocation: ${location}\nType: ${type}\nBudget: ${budget}\nPlease send me available options.`;
+    window.open(`https://wa.me/2349159898728?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // Form submit
+  function submitForm() {
+    const name = document.getElementById('fname').value;
+    const phone = document.getElementById('fphone').value;
+    const interest = document.getElementById('finterest').value;
+    const message = document.getElementById('fmessage').value;
+    if (!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+    const text = `Hello itwoj Realty,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${interest}\nMessage: ${message}`;
+    window.open(`https://wa.me/2349159898728?text=${encodeURIComponent(text)}`, '_blank');
+  }
+
+  // Show popup after 5 seconds
+  setTimeout(() => {
+    document.getElementById('waPopup').classList.add('open');
+  }, 5000);
+</script>
+</body>
+</html>
