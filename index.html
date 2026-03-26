@@ -33,7 +33,9 @@
     transition: box-shadow 0.3s;
   }
   nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.08); }
-  .nav-logo img { height: 48px; width: auto; }
+  .nav-logo img { height: 72px; width: auto; cursor: pointer; transition: opacity 0.2s; }
+  .nav-logo a { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img:hover { opacity: 0.85; }
 
   .hamburger {
     width: 44px; height: 44px;
@@ -388,6 +390,37 @@
     .counter-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
     .credentials-row { flex-direction: column; }
   }
+
+  /* ─── IMAGE SLIDER ─── */
+  .slider-container { position: relative; overflow: hidden; width: 100%; height: 100%; }
+  .slider-track { display: flex; height: 100%; transition: transform 0.4s ease; }
+  .slider-slide { min-width: 100%; height: 100%; flex-shrink: 0; }
+  .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px; z-index: 5; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .slider-btn:hover { background: var(--red); }
+  .slider-prev { left: 12px; }
+  .slider-next { right: 12px; }
+  .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
+  .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s; }
+  .slider-dot.active { background: white; }
+
+  /* ─── LISTING MODAL ─── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 20px; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-box { background: white; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+  .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; background: var(--red); color: white; border: none; cursor: pointer; font-size: 18px; z-index: 10; display: flex; align-items: center; justify-content: center; }
+  .modal-slider { height: 400px; position: relative; }
+  .modal-content { padding: 36px; }
+  .modal-title { font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 600; color: var(--black); margin-bottom: 6px; }
+  .modal-loc { font-size: 13px; color: var(--grey); margin-bottom: 24px; }
+  .modal-specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 0; border-top: 1px solid rgba(176,16,48,0.1); border-bottom: 1px solid rgba(176,16,48,0.1); margin-bottom: 20px; }
+  .modal-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .modal-feat { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--grey); }
+  .modal-cta { background: var(--red); color: white; padding: 16px 36px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .modal-cta:hover { background: var(--red-dark); }
+  .listing-card { cursor: pointer; }
+  .expand-hint { position: absolute; bottom: 12px; right: 12px; background: rgba(176,16,48,0.85); color: white; font-size: 10px; letter-spacing: 1px; padding: 6px 12px; z-index: 3; }
+
 </style>
 </head>
 <body>
@@ -416,7 +449,9 @@
 <!-- NAVBAR -->
 <nav id="navbar">
   <div class="nav-logo">
-    <img src="logo.jpg" alt="itwoj Realty Ltd" onerror="this.style.display='none'">
+    <a href="#home" onclick="closeMenu()">
+      <img src="logo.jpg" alt="itwoj Realty Ltd" onerror="this.style.display='none'">
+    </a>
   </div>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -654,13 +689,26 @@
     <div class="listing-category active" id="tab-land">
       <div class="listings-grid">
         <div class="listing-card featured fade-up">
-          <div class="listing-img">
-            <img src="ibile_site.jpg" alt="Ibile Farm City" onerror="this.style.background='linear-gradient(135deg, #2d5a1b, #1a3a0a)'">
+          <div class="listing-img" onclick="openModal('ibile')">
+            <div class="slider-container" id="ibile-slider">
+              <div class="slider-track" id="ibile-track">
+                <div class="slider-slide"><img src="ibile_1.jpg" alt="Ibile Farm City"></div>
+                <div class="slider-slide"><img src="ibile_3.jpg" alt="Ibile Farm City Site"></div>
+                <div class="slider-slide"><img src="ibile_4.jpg" alt="Ibile Land"></div>
+                <div class="slider-slide"><img src="ibile_5.jpg" alt="Ibile Wide View"></div>
+                <div class="slider-slide"><img src="ibile_2.jpg" alt="Ibile Billboard"></div>
+                <div class="slider-slide"><img src="ibile_6.jpg" alt="Deal Closed"></div>
+              </div>
+              <button class="slider-btn slider-prev" onclick="event.stopPropagation();slideImg('ibile',-1)">&#8249;</button>
+              <button class="slider-btn slider-next" onclick="event.stopPropagation();slideImg('ibile',1)">&#8250;</button>
+              <div class="slider-dots" id="ibile-dots"></div>
+            </div>
             <div class="listing-badge">Pre-Launch Offer</div>
             <div class="listing-price-overlay">
               <div class="listing-price">From ₦500K</div>
               <div class="listing-price-label">Starting Price</div>
             </div>
+            <div class="expand-hint">🔍 Click to expand</div>
           </div>
           <div class="listing-info">
             <div class="listing-eyebrow">🌾 Ibile Farm City · Abeokuta, Ogun State</div>
@@ -689,13 +737,24 @@
     <div class="listing-category" id="tab-offplan">
       <div class="listings-grid">
         <div class="listing-card featured fade-up">
-          <div class="listing-img">
-            <img src="ambiance_photo.jpg" alt="Ambiance II" onerror="this.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'">
+          <div class="listing-img" onclick="openModal('ambiance')">
+            <div class="slider-container" id="ambiance-slider">
+              <div class="slider-track" id="ambiance-track">
+                <div class="slider-slide"><img src="ambiance_1.jpg" alt="Ambiance II"></div>
+                <div class="slider-slide"><img src="ambiance_2.jpg" alt="Ambiance II Side View"></div>
+                <div class="slider-slide"><img src="ambiance_3.jpg" alt="Ambiance II Front"></div>
+                <div class="slider-slide"><img src="ambiance_4.jpg" alt="Ambiance II Row"></div>
+              </div>
+              <button class="slider-btn slider-prev" onclick="event.stopPropagation();slideImg('ambiance',-1)">&#8249;</button>
+              <button class="slider-btn slider-next" onclick="event.stopPropagation();slideImg('ambiance',1)">&#8250;</button>
+              <div class="slider-dots" id="ambiance-dots"></div>
+            </div>
             <div class="listing-badge">Off-Plan · C of O</div>
             <div class="listing-price-overlay">
               <div class="listing-price">₦135M</div>
               <div class="listing-price-label">3 Month Plan</div>
             </div>
+            <div class="expand-hint">🔍 Click to expand</div>
           </div>
           <div class="listing-info">
             <div class="listing-eyebrow">🏗️ Ambiance II by Tribitat · Sangotedo, Lagos</div>
@@ -842,23 +901,23 @@
         <div class="social-row">
           <div class="social-label">Follow @itwojrealty</div>
           <div class="social-links">
-            <a href="https://www.facebook.com/share/1AYZoxCYxA/" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook
+            <a href="https://www.facebook.com/share/1AYZoxCYxA/" target="_blank" class="social-link" style="color:#1877F2;border-color:rgba(24,119,242,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook
             </a>
-            <a href="https://www.instagram.com/itwojrealty" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" style="fill:none;stroke:currentColor;stroke-width:2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" style="stroke:currentColor;stroke-width:2"/></svg>Instagram
+            <a href="https://www.instagram.com/itwojrealty" target="_blank" class="social-link" style="color:#E1306C;border-color:rgba(225,48,108,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:none;stroke:#E1306C;stroke-width:2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram
             </a>
-            <a href="https://www.linkedin.com/company/itwoj-realty-ltd/" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
+            <a href="https://www.linkedin.com/company/itwoj-realty-ltd/" target="_blank" class="social-link" style="color:#0A66C2;border-color:rgba(10,102,194,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#0A66C2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
             </a>
-            <a href="https://vm.tiktok.com/ZS9RMykhqTFKx-Kabek/" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>TikTok
+            <a href="https://vm.tiktok.com/ZS9RMykhqTFKx-Kabek/" target="_blank" class="social-link" style="color:#ffffff;border-color:rgba(255,255,255,0.2);background:#010101;">
+              <svg viewBox="0 0 24 24" style="fill:none;stroke:white;stroke-width:2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>TikTok
             </a>
-            <a href="https://youtube.com/@itwojrealty" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" style="fill:var(--black)"/></svg>YouTube
+            <a href="https://youtube.com/@itwojrealty" target="_blank" class="social-link" style="color:#FF0000;border-color:rgba(255,0,0,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#FF0000"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" style="fill:white"/></svg>YouTube
             </a>
-            <a href="https://x.com/itwojrealty" target="_blank" class="social-link">
-              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X
+            <a href="https://x.com/itwojrealty" target="_blank" class="social-link" style="color:#ffffff;border-color:rgba(255,255,255,0.2);background:#000000;">
+              <svg viewBox="0 0 24 24" style="fill:white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X
             </a>
           </div>
         </div>
@@ -993,6 +1052,146 @@
     const text = `Hello itwoj Realty,\n\nName: ${name}\nPhone: ${phone}\nInterest: ${interest}\nMessage: ${message}`;
     window.open(`https://wa.me/2349159898728?text=${encodeURIComponent(text)}`, '_blank');
   }
+
+  // Slider logic
+  const sliderState = {};
+
+  function initSlider(id) {
+    const track = document.getElementById(id + '-track');
+    const dotsContainer = document.getElementById(id + '-dots');
+    if (!track) return;
+    const slides = track.children.length;
+    sliderState[id] = { current: 0, total: slides };
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < slides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = (e) => { e.stopPropagation(); goToSlide(id, i); };
+        dotsContainer.appendChild(dot);
+      }
+    }
+  }
+
+  function goToSlide(id, index) {
+    const track = document.getElementById(id + '-track');
+    const dots = document.getElementById(id + '-dots');
+    if (!track) return;
+    sliderState[id].current = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    if (dots) {
+      dots.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+  }
+
+  function slideImg(id, dir) {
+    if (!sliderState[id]) initSlider(id);
+    const state = sliderState[id];
+    let next = state.current + dir;
+    if (next < 0) next = state.total - 1;
+    if (next >= state.total) next = 0;
+    goToSlide(id, next);
+  }
+
+  function openModal(name) {
+    document.getElementById('modal-' + name).classList.add('open');
+    document.body.style.overflow = 'hidden';
+    initSlider('modal-' + name);
+  }
+
+  function closeModal(name) {
+    document.getElementById('modal-' + name).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Init all sliders on page load
+  window.addEventListener('load', () => {
+    ['ibile', 'ambiance'].forEach(id => initSlider(id));
+  });
+
 </script>
+
+<!-- IBILE MODAL -->
+<div class="modal-overlay" id="modal-ibile" onclick="closeModal('ibile')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('ibile')">✕</button>
+    <div class="modal-slider">
+      <div class="slider-container" id="modal-ibile-slider">
+        <div class="slider-track" id="modal-ibile-track">
+          <div class="slider-slide"><img src="ibile_1.jpg" alt="Ibile Farm City"></div>
+          <div class="slider-slide"><img src="ibile_3.jpg" alt="Ibile Site"></div>
+          <div class="slider-slide"><img src="ibile_4.jpg" alt="Ibile Land View"></div>
+          <div class="slider-slide"><img src="ibile_5.jpg" alt="Ibile Wide Shot"></div>
+          <div class="slider-slide"><img src="ibile_2.jpg" alt="Ibile Billboard"></div>
+          <div class="slider-slide"><img src="ibile_6.jpg" alt="Deal Closed at Ibile"></div>
+        </div>
+        <button class="slider-btn slider-prev" onclick="slideImg('modal-ibile',-1)">&#8249;</button>
+        <button class="slider-btn slider-next" onclick="slideImg('modal-ibile',1)">&#8250;</button>
+        <div class="slider-dots" id="modal-ibile-dots"></div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div style="font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:8px;">🌾 Land For Sale · Abeokuta, Ogun State</div>
+      <div class="modal-title">Ibile Farm City</div>
+      <div class="modal-loc">📍 Ibara, Abeokuta, Ogun State · Powered by Ace Real Estate</div>
+      <div class="modal-specs">
+        <div><div class="spec-val">₦500K</div><div class="spec-lbl">500 SQM</div></div>
+        <div><div class="spec-val">₦1M</div><div class="spec-lbl">1,000 SQM</div></div>
+        <div><div class="spec-val">₦3M</div><div class="spec-lbl">1 Acre</div></div>
+        <div><div class="spec-val">3 Months</div><div class="spec-lbl">Payment Plan</div></div>
+      </div>
+      <div class="modal-features">
+        <div class="modal-feat"><div class="feat-dot"></div>100% Dry Land — Agricultural & Residential Clusters available</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Registered Survey · Global C of O in View</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Excellent road network · Located between communities</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Government project nearby — strong growth potential</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Price increase: 29 March 2026 — buy now at pre-launch price</div>
+        <div class="modal-feat"><div class="feat-dot"></div>No hidden charges · Quick allocation</div>
+      </div>
+      <a href="https://wa.me/2349159898728?text=Hello%20itwoj%20Realty%2C%20I%27m%20interested%20in%20Ibile%20Farm%20City%2C%20Abeokuta." target="_blank" class="modal-cta">Enquire on WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
+<!-- AMBIANCE MODAL -->
+<div class="modal-overlay" id="modal-ambiance" onclick="closeModal('ambiance')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('ambiance')">✕</button>
+    <div class="modal-slider">
+      <div class="slider-container" id="modal-ambiance-slider">
+        <div class="slider-track" id="modal-ambiance-track">
+          <div class="slider-slide"><img src="ambiance_1.jpg" alt="Ambiance II"></div>
+          <div class="slider-slide"><img src="ambiance_2.jpg" alt="Ambiance II Side"></div>
+          <div class="slider-slide"><img src="ambiance_3.jpg" alt="Ambiance II Front"></div>
+          <div class="slider-slide"><img src="ambiance_4.jpg" alt="Ambiance II Row"></div>
+        </div>
+        <button class="slider-btn slider-prev" onclick="slideImg('modal-ambiance',-1)">&#8249;</button>
+        <button class="slider-btn slider-next" onclick="slideImg('modal-ambiance',1)">&#8250;</button>
+        <div class="slider-dots" id="modal-ambiance-dots"></div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div style="font-size:9px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:8px;">🏗️ Off-Plan · Sangotedo, Lagos</div>
+      <div class="modal-title">Ambiance II — 3 Bed Terrace + BQ</div>
+      <div class="modal-loc">📍 Oko Ado, Behind LBS, Sangotedo, Lagos · By Tribitat</div>
+      <div class="modal-specs">
+        <div><div class="spec-val">₦135M</div><div class="spec-lbl">3 Month Plan</div></div>
+        <div><div class="spec-val">₦138M</div><div class="spec-lbl">6 Month Plan</div></div>
+        <div><div class="spec-val">₦30M</div><div class="spec-lbl">Initial Deposit</div></div>
+        <div><div class="spec-val">C of O</div><div class="spec-lbl">Title</div></div>
+      </div>
+      <div class="modal-features">
+        <div class="modal-feat"><div class="feat-dot"></div>3 Bedrooms + BQ — Smart layouts, modern finishes</div>
+        <div class="modal-feat"><div class="feat-dot"></div>24hr Security · Street Lighting · Drainage System</div>
+        <div class="modal-feat"><div class="feat-dot"></div>CCTV Surveillance · Good Road Network</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Key infrastructure already in place — visible progress</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Certificate of Occupancy included</div>
+        <div class="modal-feat"><div class="feat-dot"></div>Fast developing Sangotedo corridor — behind LBS</div>
+      </div>
+      <a href="https://wa.me/2349159898728?text=Hello%20itwoj%20Realty%2C%20I%27m%20interested%20in%20Ambiance%20II%2C%20Sangotedo." target="_blank" class="modal-cta">Enquire on WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
